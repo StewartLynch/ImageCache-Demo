@@ -1,6 +1,6 @@
 # Image Cache
 
-![AppIcon128](Images/AppIcon128.png) This is the **starter project** for the video on creating an image cache
+![AppIcon128](Images/AppIcon128.png) This is the **completed source code** for the video on creating an image cache
 
 If you want to support my work, you can - </br>
 
