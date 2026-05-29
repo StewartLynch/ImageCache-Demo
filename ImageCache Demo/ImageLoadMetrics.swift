@@ -15,3 +15,22 @@
 
 
 import Foundation
+
+@Observable
+final class ImageLoadMetrics {
+    var networkLoads = 0
+    var cacheHits = 0
+    
+    func recordNetworkLoads() {
+        networkLoads += 1
+    }
+    
+    func recordCacheHit() {
+        cacheHits += 1
+    }
+    
+    func reset() {
+        networkLoads = 0
+        cacheHits = 0
+    }
+}

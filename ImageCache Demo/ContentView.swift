@@ -18,11 +18,15 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var photoStore = PhotoStore()
+    @State private var imageCache = ImageCache()
+    @State private var metrics = ImageLoadMetrics()
 
     var body: some View {
         NavigationStack {
             List(photoStore.photos) { photo in
                 PhotoRow(photo: photo)
+                    .environment(imageCache)
+                    .environment(metrics)
             }
             .listStyle(.plain)
             .navigationTitle("Image Cache Demo")
@@ -53,9 +57,20 @@ struct ContentView: View {
                     }
                     .disabled(!photoStore.canLoadNextPage)
                 }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button("Clear Cache") {
+                        imageCache.removeAll()
+                        metrics.reset()
+                    }
+                }
             }
             .safeAreaInset(edge: .bottom) {
-                Text("Starter: \(photoStore.photos.count) JSON photos loaded. AsyncImage owns the image loading behavior.")
+                HStack {
+                    Label("\(photoStore.photos.count)", systemImage: "photo.stack")
+                    Label("\(metrics.networkLoads)", systemImage: "network")
+                    Label("\(metrics.cacheHits)", systemImage: "externaldrive.fill.badge.checkmark")
+                }
+                .padding(.top)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -88,29 +103,10 @@ private struct PhotoRow: View {
 
     var body: some View {
         HStack {
-            AsyncImage(url: photo.thumbnailURL) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                        .frame(width: 96, height: 72)
-                case let .success(image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 96, height: 72)
-                        .clipShape(.rect(cornerRadius: 8))
-                case .failure:
-                    Image(systemName: "photo.badge.exclamationmark")
-                        .font(.largeTitle)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 96, height: 72)
-                @unknown default:
-                    EmptyView()
-                }
-            }
-            .background(.quaternary)
-            .clipShape(.rect(cornerRadius: 8))
-
+            CachedAsyncImage(
+                cacheKey: photo.id,
+                url: photo.thumbnailURL
+            )
             VStack(alignment: .leading) {
                 Text(photo.title)
                     .font(.headline)
