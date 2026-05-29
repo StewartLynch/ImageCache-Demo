@@ -68,12 +68,6 @@ struct ContentView: View {
         }
     }
 
-    private func refreshFeedButtonTapped() {
-        Task {
-            await photoStore.loadSelectedPage()
-        }
-    }
-
     private func previousPageButtonTapped() {
         photoStore.selectPreviousPage()
         Task {
