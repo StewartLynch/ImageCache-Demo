@@ -1,0 +1,43 @@
+{
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.96783,0.56767,0.05512,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "C8FD5E3E-347B-460C-A757-DF1915CCF426.png",
+          "name" : "C8FD5E3E-347B-460C-A757-DF1915CCF426",
+          "position" : {
+            "scale" : 1.12,
+            "translation-in-points" : [
+              -51.94666666666683,
+              0
+            ]
+          }
+        }
+      ],
+      "position" : {
+        "scale" : 0.6,
+        "translation-in-points" : [
+          0,
+          0
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
